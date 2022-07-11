@@ -7,14 +7,14 @@ srtp_tourniquet\main.o: ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_def.h
 srtp_tourniquet\main.o: ../Drivers/CMSIS/Device/ST/STM32F0xx/Include/stm32f0xx.h
 srtp_tourniquet\main.o: ../Drivers/CMSIS/Device/ST/STM32F0xx/Include/stm32f030x8.h
 srtp_tourniquet\main.o: ../Drivers/CMSIS/Include/core_cm0.h
-srtp_tourniquet\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+srtp_tourniquet\main.o: D:\qqqqqqqqqqqqqqq\ARM\ARMCC\Bin\..\include\stdint.h
 srtp_tourniquet\main.o: ../Drivers/CMSIS/Include/cmsis_version.h
 srtp_tourniquet\main.o: ../Drivers/CMSIS/Include/cmsis_compiler.h
 srtp_tourniquet\main.o: ../Drivers/CMSIS/Include/cmsis_armcc.h
 srtp_tourniquet\main.o: ../Drivers/CMSIS/Device/ST/STM32F0xx/Include/system_stm32f0xx.h
 srtp_tourniquet\main.o: ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal.h
 srtp_tourniquet\main.o: ../Drivers/STM32F0xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h
-srtp_tourniquet\main.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+srtp_tourniquet\main.o: D:\qqqqqqqqqqqqqqq\ARM\ARMCC\Bin\..\include\stddef.h
 srtp_tourniquet\main.o: ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_rcc_ex.h
 srtp_tourniquet\main.o: ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_gpio.h
 srtp_tourniquet\main.o: ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_gpio_ex.h
@@ -40,3 +40,4 @@ srtp_tourniquet\main.o: ../Core/Inc/usart.h
 srtp_tourniquet\main.o: ../Core/Inc/gpio.h
 srtp_tourniquet\main.o: ../Core/Inc/key.h
 srtp_tourniquet\main.o: ../Core/Inc/stm32f0xx_it.h
+srtp_tourniquet\main.o: ../Core/Inc/display.h

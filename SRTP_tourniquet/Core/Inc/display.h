@@ -1,0 +1,28 @@
+#ifndef __TM1640_H
+#define __TM1640_H	 
+
+#include "stm32f0xx_it.h"
+#include "main.h"
+#include "stm32f0xx_hal.h"
+
+#define TM1640_GPIOPORT	GPIOA	//定义IO接口
+#define GPIO_Pin_14 TM1640_DIN	//定义IO接口
+#define GPIO_Pin_13 TM1640_SCLK	//定义IO接口
+#define TM1640_LEDPORT	0xC8	//定义IO接口
+
+typedef uint8_t u8;
+typedef uint16_t u16;
+typedef uint32_t u32;
+
+void TM1640_Init(void );
+
+void TM1640_writeInt(u8 data);
+void TM1640_writeFloat(float data);//显示当前气压值，需要考虑0.01-100以上的几种不同情况
+void TM1640_display(u8 adress,u8 data);
+
+void TM1640_start(void);
+void TM1640_stop(void);
+
+//void TM1640_led(u8 date);
+		 				    
+#endif

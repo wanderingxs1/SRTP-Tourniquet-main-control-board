@@ -26,11 +26,14 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "key.h"
+#include "display.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN PTD */
-
+typedef uint8_t u8;
+typedef uint16_t u16;
+typedef uint32_t u32;
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -46,9 +49,12 @@
 
 /* USER CODE BEGIN PV */
 //时间变量
-unsigned int setTime = 0;//设定时间
-unsigned int curTime = 0;//当前时间
-uint8_t key;
+u8 setTime = 0;//设定时间
+u8 curTime = 0;//当前时间
+float curPres = 0.0;//当前压力
+u8 setPres = 0;//设定压力
+u8 key;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -69,7 +75,10 @@ void SystemClock_Config(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-
+	
+	//显示板芯片初始化
+	TM1640_Init();
+	
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -111,13 +120,51 @@ int main(void)
 					case KEY_Tinc: //T1+,设定时间+1min
 						setTime++;break;
 					case KEY_Pdec: //P1-
-						;break;
+						setPres--;break;
 					case KEY_Pinc: //P1+
-						;break;
+						setPres ++;break;
 				}
 				}
 		else HAL_Delay(10);
-		/* USER CODE END WHILE */
+		
+//四个LCD显示数值（未完成）
+//TM1640_display(0,curPres  );//浮点数从0.01到100+，表示方式待做
+//每个LED组有3个LED，需查看对应地址
+		u8 count=0;
+		u8 tmp1,tmp2;
+		
+		if(curPres ==0){
+		for(count=0;count<3;count++)
+			TM1640_display (count,0);
+		}		
+				
+		tmp1=setPres%10;
+		tmp2 = setPres /10;
+		for(count=5;count>2;count--){
+			TM1640_display (count,tmp1);
+			tmp1=tmp2%10;
+			tmp2=tmp2/10;
+		}
+
+		tmp1=curTime %10;
+		tmp2 = curTime  /10;
+		for(count=8;count>5;count--){
+			TM1640_display (count,tmp1);
+			tmp1=tmp2%10;
+			tmp2=tmp2/10;
+		}
+		
+		tmp1=setTime %10;
+		tmp2 = setTime  /10;
+		for(count=11;count>8;count--){
+			TM1640_display (count,tmp1);
+			tmp1=tmp2%10;
+			tmp2=tmp2/10;
+		}
+
+		//不知道用不用点亮灯
+		
+    /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
   }

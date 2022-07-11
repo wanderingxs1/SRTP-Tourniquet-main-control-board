@@ -358,12 +358,10 @@ ARM Macro Assembler    Page 6
               00000000 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M0 --apcs=interw
 ork --depend=srtp_tourniquet\startup_stm32f030x8.d -osrtp_tourniquet\startup_st
-m32f030x8.o -I.\RTE\_SRTP_tourniquet -IC:\Users\DELL\AppData\Local\Arm\Packs\AR
-M\CMSIS\5.7.0\CMSIS\Core\Include -IC:\Users\DELL\AppData\Local\Arm\Packs\Keil\S
-TM32F0xx_DFP\2.0.0\Drivers\CMSIS\Device\ST\STM32F0xx\Include --predefine="__EVA
-L SETA 1" --predefine="__UVISION_VERSION SETA 527" --predefine="_RTE_ SETA 1" -
--predefine="STM32F030x8 SETA 1" --list=startup_stm32f030x8.lst startup_stm32f03
-0x8.s
+m32f030x8.o -I.\RTE\_SRTP_tourniquet -ID:\qqqqqqqqqqqqqqq\ARM\CMSIS\5.5.1\CMSIS
+\Core\Include --predefine="__EVAL SETA 1" --predefine="__UVISION_VERSION SETA 5
+27" --predefine="_RTE_ SETA 1" --list=startup_stm32f030x8.lst startup_stm32f030
+x8.s
 
 
 
@@ -873,4 +871,4 @@ Symbol: __use_two_region_memory
       None
 Comment: __use_two_region_memory unused
 3 symbols
-388 symbols in table
+387 symbols in table

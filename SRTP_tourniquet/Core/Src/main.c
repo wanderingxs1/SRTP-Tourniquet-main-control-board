@@ -119,9 +119,17 @@ int main(void)
 				workStatue=1;
 				switch(key)
 				{ case KEY_Tdec: //T1-,设定时间-1min
-						setTime--;break;
+					HAL_TIM_Base_Stop_IT(&htim6);//关闭定时器中断	
+						__HAL_TIM_CLEAR_FLAG(&htim6,TIM_FLAG_UPDATE);//清除标志位
+						setTime--;
+						curTime = setTime ;
+						HAL_TIM_Base_Start_IT(&htim6);//打开定时器中断
+						break;
 					case KEY_Tinc: //T1+,设定时间+1min
-						setTime++;break;
+						__HAL_TIM_CLEAR_FLAG(&htim6,TIM_FLAG_UPDATE);//清除标志位
+						setTime++;
+						curTime = setTime ;
+						HAL_TIM_Base_Start_IT(&htim6);//打开定时器中断break;
 					case KEY_Pdec: //P1-
 						setPres--;break;
 					case KEY_Pinc: //P1+

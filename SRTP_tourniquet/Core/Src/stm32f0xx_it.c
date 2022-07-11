@@ -26,7 +26,9 @@
 
 /* Private typedef -----------------------------------------------------------*/
 /* USER CODE BEGIN TD */
-
+typedef uint8_t u8;
+typedef uint16_t u16;
+typedef uint32_t u32;
 /* USER CODE END TD */
 
 /* Private define ------------------------------------------------------------*/
@@ -41,7 +43,10 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
-
+extern u8 setTime ;//设定时间
+extern u8 curTime ;//当前时间
+extern u8 workStatue ;//工作状态，未定时为0，开始定时正常工作为1，溢出为2
+extern u8 buzzerWork ;//蜂鸣器工作状态，0为不工作，1为工作
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -180,7 +185,12 @@ void USART1_IRQHandler(void)
   /* USER CODE END USART1_IRQn 0 */
   HAL_UART_IRQHandler(&huart1);
   /* USER CODE BEGIN USART1_IRQn 1 */
-
+	curTime --;
+	if(curTime == 0)
+	{
+		workStatue = 2;
+		buzzerWork = 1;
+	}
   /* USER CODE END USART1_IRQn 1 */
 }
 

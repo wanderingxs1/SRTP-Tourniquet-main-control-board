@@ -54,7 +54,8 @@ u8 curTime = 0;//当前时间
 float curPres = 0.0;//当前压力
 u8 setPres = 0;//设定压力
 u8 key;
-
+u8 workStatue =0;//工作状态，未定时为0，开始定时正常工作为1，溢出为2
+u8 buzzerWork = 0;//蜂鸣器工作状态，0为不工作，1为工作
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -114,6 +115,8 @@ int main(void)
 		key = KEY_Scan(0);
 		if(key) 
 			{ 
+				buzzerWork =0;
+				workStatue=1;
 				switch(key)
 				{ case KEY_Tdec: //T1-,设定时间-1min
 						setTime--;break;
@@ -126,6 +129,11 @@ int main(void)
 				}
 				}
 		else HAL_Delay(10);
+//操纵蜂鸣器工作
+		if(buzzerWork)
+			HAL_GPIO_WritePin (GPIOB,GPIO_PIN_7,GPIO_PIN_SET);
+//显示当前工作状态指示灯
+		TM1640_lightLCD(13,workStatue);
 		
 //四个LCD显示数值（未完成）
 //TM1640_display(0,curPres  );//浮点数从0.01到100+，表示方式待做
@@ -162,7 +170,6 @@ int main(void)
 			tmp2=tmp2/10;
 		}
 
-		//不知道用不用点亮灯
 		
     /* USER CODE END WHILE */
 

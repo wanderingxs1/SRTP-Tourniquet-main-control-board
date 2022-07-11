@@ -22,21 +22,21 @@
 //通信时序 启始（基础GPIO操作）（低层）
 void TM1640_start()
 { 
-	HAL_GPIO_WritePin(TM1640_GPIOPORT,GPIO_PIN_14,GPIO_PIN_SET ); //接口输出高电平1	
-	HAL_GPIO_WritePin(TM1640_GPIOPORT,GPIO_PIN_13,GPIO_PIN_SET ); //接口输出高电平1	
+	HAL_GPIO_WritePin(TM1640_GPIOPORT,GPIO_PIN_4,GPIO_PIN_SET ); //接口输出高电平1	
+	HAL_GPIO_WritePin(TM1640_GPIOPORT,GPIO_PIN_3,GPIO_PIN_SET ); //接口输出高电平1	
 	HAL_Delay(DEL);
-	HAL_GPIO_WritePin(TM1640_GPIOPORT,GPIO_PIN_14,GPIO_PIN_RESET ); //接口输出0	
+	HAL_GPIO_WritePin(TM1640_GPIOPORT,GPIO_PIN_4,GPIO_PIN_RESET ); //接口输出0	
 	HAL_Delay(DEL);
-	HAL_GPIO_WritePin(TM1640_GPIOPORT,GPIO_PIN_13,GPIO_PIN_RESET ); //接口输出0	
+	HAL_GPIO_WritePin(TM1640_GPIOPORT,GPIO_PIN_3,GPIO_PIN_RESET ); //接口输出0	
 	HAL_Delay(DEL);
 }
 
 void TM1640_stop()
 {
-	HAL_GPIO_WritePin(TM1640_GPIOPORT,GPIO_PIN_14,GPIO_PIN_RESET );
-	HAL_GPIO_WritePin(TM1640_GPIOPORT,GPIO_PIN_13,GPIO_PIN_SET );
+	HAL_GPIO_WritePin(TM1640_GPIOPORT,GPIO_PIN_4,GPIO_PIN_RESET );
+	HAL_GPIO_WritePin(TM1640_GPIOPORT,GPIO_PIN_3,GPIO_PIN_SET );
 	HAL_Delay(DEL);
-	HAL_GPIO_WritePin(TM1640_GPIOPORT,GPIO_PIN_14,GPIO_PIN_SET ); 
+	HAL_GPIO_WritePin(TM1640_GPIOPORT,GPIO_PIN_4,GPIO_PIN_SET ); 
 	HAL_Delay(DEL);
 }
 
@@ -45,29 +45,29 @@ void TM1640_writeInt(u8 data)
 	u8 i;
 	u8 temp;
 	temp=data;
-	HAL_GPIO_WritePin(TM1640_GPIOPORT,GPIO_PIN_14,GPIO_PIN_RESET ); //接口输出0	
-	HAL_GPIO_WritePin(TM1640_GPIOPORT,GPIO_PIN_13,GPIO_PIN_RESET ); //接口输出0	
+	HAL_GPIO_WritePin(TM1640_GPIOPORT,GPIO_PIN_4,GPIO_PIN_RESET ); //接口输出0	
+	HAL_GPIO_WritePin(TM1640_GPIOPORT,GPIO_PIN_3,GPIO_PIN_RESET ); //接口输出0	
 	for(i=0;i<8;i++)
 	{
-		HAL_GPIO_WritePin(TM1640_GPIOPORT,GPIO_PIN_13,GPIO_PIN_RESET );//接口输出0	
+		HAL_GPIO_WritePin(TM1640_GPIOPORT,GPIO_PIN_3,GPIO_PIN_RESET );//接口输出0	
 		HAL_Delay(DEL);
 
 		if(temp&0x01)
 		{
-			HAL_GPIO_WritePin(TM1640_GPIOPORT,GPIO_PIN_14,GPIO_PIN_SET );  //接口输出高电平1	
+			HAL_GPIO_WritePin(TM1640_GPIOPORT,GPIO_PIN_4,GPIO_PIN_SET );  //接口输出高电平1	
 			HAL_Delay(DEL);
 		}
 		else
 		{
-			HAL_GPIO_WritePin(TM1640_GPIOPORT,GPIO_PIN_14,GPIO_PIN_RESET ); //接口输出0	
+			HAL_GPIO_WritePin(TM1640_GPIOPORT,GPIO_PIN_4,GPIO_PIN_RESET ); //接口输出0	
 			HAL_Delay(DEL);
 		}
-		HAL_GPIO_WritePin(TM1640_GPIOPORT,GPIO_PIN_13,GPIO_PIN_SET ); //接口输出高电平1	
+		HAL_GPIO_WritePin(TM1640_GPIOPORT,GPIO_PIN_3,GPIO_PIN_SET ); //接口输出高电平1	
 		HAL_Delay(DEL);
 		temp=temp>>1;
    }
-	HAL_GPIO_WritePin(TM1640_GPIOPORT,GPIO_PIN_14,GPIO_PIN_RESET ); //接口输出0	
-	HAL_GPIO_WritePin(TM1640_GPIOPORT,GPIO_PIN_13,GPIO_PIN_RESET ); //接口输出0	
+	HAL_GPIO_WritePin(TM1640_GPIOPORT,GPIO_PIN_4,GPIO_PIN_RESET ); //接口输出0	
+	HAL_GPIO_WritePin(TM1640_GPIOPORT,GPIO_PIN_3,GPIO_PIN_RESET ); //接口输出0	
 }
 
 void TM1640_writeFloat(float data)
@@ -85,8 +85,8 @@ void TM1640_Init()
 //    GPIO_InitStructure.Speed = GPIO_SPEED_FREQ_HIGH; //设置IO接口速度（2/10/50MHz）    
 //		HAL_GPIO_Init(TM1640_GPIOPORT, &GPIO_InitStructure);
 
-	HAL_GPIO_WritePin(TM1640_GPIOPORT,GPIO_PIN_14,GPIO_PIN_SET ); //接口输出高电平1	
-	HAL_GPIO_WritePin(TM1640_GPIOPORT,GPIO_PIN_13,GPIO_PIN_SET ); //接口输出高电平1	
+	HAL_GPIO_WritePin(TM1640_GPIOPORT,GPIO_PIN_4,GPIO_PIN_SET ); //接口输出高电平1	
+	HAL_GPIO_WritePin(TM1640_GPIOPORT,GPIO_PIN_3,GPIO_PIN_SET ); //接口输出高电平1	
 	TM1640_start();
 	TM1640_writeInt(TM1640MEDO_ADD); //设置数据，0x40,0x44分别对应地址自动加一和固定地址模式
 	TM1640_stop();
@@ -108,6 +108,22 @@ void TM1640_display(u8 address,u8 data)
    TM1640_stop();
 }
 
+void TM1640_lightLCD(u8 address,u8 workStatue)
+{
+	TM1640_start();
+	TM1640_writeInt (0xC0+address);
+	switch(workStatue){
+		case 0:
+			TM1640_writeInt(0x08);break;
+		case 1:
+			TM1640_writeInt (0x04);break;
+		case 2:
+			TM1640_writeInt(0x02);break;
+		default:
+			break;
+	}
+	TM1640_stop();
+}
 //固定地址模式的显示输出8个LED控制
 //void TM1640_led(u8 date)
 //{ 

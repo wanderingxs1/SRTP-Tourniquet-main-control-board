@@ -1,4 +1,4 @@
-srtp_tourniquet\display.o: display.c
+srtp_tourniquet\display.o: ..\Core\Src\display.c
 srtp_tourniquet\display.o: ../Core/Inc/display.h
 srtp_tourniquet\display.o: ../Core/Inc/stm32f0xx_it.h
 srtp_tourniquet\display.o: ../Core/Inc/main.h

@@ -486,7 +486,7 @@
             <File>
               <FileName>display.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\display.c</FilePath>
+              <FilePath>..\Core\Src\display.c</FilePath>
             </File>
           </Files>
         </Group>

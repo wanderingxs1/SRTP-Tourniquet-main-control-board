@@ -51,7 +51,7 @@ typedef uint32_t u32;
 //时间变量
 u8 setTime = 0;//设定时间
 u8 curTime = 0;//当前时间
-float curPres = 0.0;//当前压力
+u8 curPres = 0;//当前压力,0-100kpa
 u8 setPres = 0;//设定压力
 u8 key;
 u8 workStatue =0;//工作状态，未定时为0，开始定时正常工作为1，溢出为2
@@ -143,16 +143,18 @@ int main(void)
 //显示当前工作状态指示灯
 		TM1640_lightLCD(13,workStatue);
 		
-//四个LCD显示数值（未完成）
-//TM1640_display(0,curPres  );//浮点数从0.01到100+，表示方式待做
-//每个LED组有3个LED，需查看对应地址
-		u8 count=0;
+//四个LCD显示数值
+//每个LED组有3个LED，对应地址
+		int count=0;
 		u8 tmp1,tmp2;
 		
-		if(curPres ==0){
-		for(count=0;count<3;count++)
-			TM1640_display (count,0);
-		}		
+		tmp1=curPres%10;
+		tmp2 = curPres /10;
+		for(count=2;count>=0;count--){
+			TM1640_display (count,tmp1);
+			tmp1=tmp2%10;
+			tmp2=tmp2/10;
+		}
 				
 		tmp1=setPres%10;
 		tmp2 = setPres /10;

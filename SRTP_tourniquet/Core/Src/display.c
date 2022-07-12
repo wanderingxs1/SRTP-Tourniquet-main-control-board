@@ -1,17 +1,17 @@
 #include "display.h"
 
-#define DEL  1   //宏定义 通信速率（默认为1，如不能通信可加大数值）
+#define DEL  1   //宏定义 通信速率
 
 //地址模式的设置
 //#define TM1640MEDO_ADD  0x40   //宏定义	自动加一模式
-#define TM1640MEDO_ADD  0x44   //宏定义 固定地址模式（推荐）
+#define TM1640MEDO_ADD  0x44   //宏定义 固定地址模式（适配当前）
 
 //显示亮度的设置
 //#define TM1640MEDO_DISPLAY  0x88   //宏定义 亮度  最小
 //#define TM1640MEDO_DISPLAY  0x89   //宏定义 亮度
 //#define TM1640MEDO_DISPLAY  0x8a   //宏定义 亮度
 //#define TM1640MEDO_DISPLAY  0x8b   //宏定义 亮度
-#define TM1640MEDO_DISPLAY  0x8c   //宏定义 亮度（推荐）
+#define TM1640MEDO_DISPLAY  0x8c   //宏定义 亮度（最适）
 //#define TM1640MEDO_DISPLAY  0x8d   //宏定义 亮度
 //#define TM1640MEDO_DISPLAY  0x8f   //宏定义 亮度 最大
 
@@ -70,10 +70,6 @@ void TM1640_writeInt(u8 data)
 	HAL_GPIO_WritePin(TM1640_GPIOPORT,GPIO_PIN_3,GPIO_PIN_RESET ); //接口输出0	
 }
 
-void TM1640_writeFloat(float data)
-{
-	
-}
 
 void TM1640_Init()
 {

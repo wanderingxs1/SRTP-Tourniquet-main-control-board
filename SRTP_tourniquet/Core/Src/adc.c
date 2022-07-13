@@ -182,13 +182,13 @@ uint16_t Get_Press(void)
 		adc_Value=HAL_ADC_GetValue(&hadc);
 	}
 	//转换为气压/kPa
-	if(adc_Value < (int)4096*0.2/3.3)//采集到电压小于0.2V,返回为0kPa
+	if(adc_Value < (int)4096*0.5/3.3)//采集到电压小于0.2V,返回为0kPa
 		return 0;
-	else if(adc_Value > (int)4096*2.7/3.3)//采集到电压大于,返回为100kPa
+	else if(adc_Value > 4096)//采集到电压大于3.3V返回为100kPa
 		return 100;
 	else
 	{
-		adc_Press = (int)((adc_Value*3.3*40/4096) - 8);	
+		adc_Press = (int)((adc_Value*3.3*25/4096) - 12.5);	
 		return adc_Press;
 	}
 }

@@ -78,7 +78,7 @@ int main(void)
   /* USER CODE BEGIN 1 */
 	
 	//显示板芯片初始化
-	TM1640_Init();
+
 	
   /* USER CODE END 1 */
 
@@ -104,7 +104,7 @@ int main(void)
   MX_USART1_UART_Init();
   MX_TIM6_Init();
   /* USER CODE BEGIN 2 */
-
+	TM1640_Init();
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -133,35 +133,36 @@ int main(void)
 						setTime++;
 						curTime = setTime ;
 						HAL_TIM_Base_Start_IT(&htim6);//打开定时器中断break;
+					 break;
 					case KEY_Pdec: //P1-
 						setPres--;break;
 					case KEY_Pinc: //P1+
 						setPres ++;break;
 				}
 				}
-		else HAL_Delay(10);
+		else delay_ms(10);
 //操纵蜂鸣器工作
 		if(buzzerWork)
 			HAL_GPIO_WritePin (GPIOB,GPIO_PIN_7,GPIO_PIN_SET);
 //显示当前工作状态指示灯
-		TM1640_lightLCD(13,workStatue);
+		TM1640_lightLCD(0x0D,workStatue);
 		
 //四个LCD显示数值
 //每个LED组有3个LED，对应地址
-		int count=0;
+		int count=0x00;
 		u8 tmp1,tmp2;
 		
 		tmp1=curPres%10;
 		tmp2 = curPres /10;
-		for(count=2;count>=0;count--){
+		for(count=0x02;count>=0x00;count--){
 			TM1640_display (count,tmp1);
 			tmp1=tmp2%10;
 			tmp2=tmp2/10;
 		}
-				
+			
 		tmp1=setPres%10;
 		tmp2 = setPres /10;
-		for(count=5;count>2;count--){
+		for(count=0x05;count>0x02;count--){
 			TM1640_display (count,tmp1);
 			tmp1=tmp2%10;
 			tmp2=tmp2/10;
@@ -169,7 +170,7 @@ int main(void)
 
 		tmp1=curTime %10;
 		tmp2 = curTime  /10;
-		for(count=8;count>5;count--){
+		for(count=0x08;count>0x05;count--){
 			TM1640_display (count,tmp1);
 			tmp1=tmp2%10;
 			tmp2=tmp2/10;
@@ -177,13 +178,14 @@ int main(void)
 		
 		tmp1=setTime %10;
 		tmp2 = setTime  /10;
-		for(count=11;count>8;count--){
+		for(count=0x0B;count>0x08;count--){
 			TM1640_display (count,tmp1);
 			tmp1=tmp2%10;
 			tmp2=tmp2/10;
 		}
+		TM1640_lightLCD(0x0C,3);//其他灯全暗
 
-		
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -204,9 +206,13 @@ void SystemClock_Config(void)
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
-  RCC_OscInitStruct.HSEState = RCC_HSE_ON;
-  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
+  RCC_OscInitStruct.HSIState = RCC_HSI_ON;
+  RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
+  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
+  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
+  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL12;
+  RCC_OscInitStruct.PLL.PREDIV = RCC_PREDIV_DIV1;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
     Error_Handler();
@@ -216,11 +222,11 @@ void SystemClock_Config(void)
   */
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
                               |RCC_CLOCKTYPE_PCLK1;
-  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSE;
+  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_1) != HAL_OK)
   {
     Error_Handler();
   }

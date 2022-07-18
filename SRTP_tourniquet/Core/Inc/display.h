@@ -22,5 +22,8 @@ void TM1640_lightLCD(u8 address,u8 workStatue);
 void TM1640_start(void);
 void TM1640_stop(void);
 
+//∫¡√Îº∂—” ±
+void delay_ms(u16 time);
+
 		 				    
 #endif

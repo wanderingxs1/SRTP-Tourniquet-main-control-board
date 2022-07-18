@@ -11,6 +11,11 @@
 #define KEY_Tinc 3 //T1+ 按下
 #define KEY_Tdec 4 //T1- 按下  
 
+#define KEY_Pi   HAL_GPIO_ReadPin(GPIOA,GPIO_PIN_15)
+#define KEY_Pd   HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_3)
+#define KEY_Ti   HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_4)
+#define KEY_Td   HAL_GPIO_ReadPin(GPIOB,GPIO_PIN_5)
+
 
 uint8_t KEY_Scan(uint8_t mode);
 #endif

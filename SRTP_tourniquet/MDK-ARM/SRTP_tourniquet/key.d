@@ -36,3 +36,4 @@ srtp_tourniquet\key.o: ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_tim_ex.
 srtp_tourniquet\key.o: ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_uart.h
 srtp_tourniquet\key.o: ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_uart_ex.h
 srtp_tourniquet\key.o: ../Core/Inc/stm32f0xx_it.h
+srtp_tourniquet\key.o: ../Core/Inc/display.h

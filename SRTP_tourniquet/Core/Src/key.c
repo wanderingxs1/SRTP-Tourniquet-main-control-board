@@ -1,5 +1,6 @@
 #include "key.h"
-
+#include "display.h"
+#include "main.h"
 /*******************************************************************************
 * 函 数 名         : KEY_Scan
 * 函数功能		   : 按键扫描检测
@@ -14,15 +15,15 @@ uint8_t KEY_Scan(uint8_t mode)
 {
 	static uint8_t key_up=1; //按键按松开标志
 	if(mode)key_up=1; //模式选择
-	if(key_up&&(P1_inc_Pin==0||P1_dec_Pin==0||T1_inc_Pin==0||T1_dec_Pin==0))
+	if(key_up&&(KEY_Pi==0||KEY_Pd==0||KEY_Ti==0||KEY_Td==0))
 	{
-		HAL_Delay(10); //消抖
+		delay_ms(10); //消抖
 		key_up=0;				
-		if(P1_inc_Pin==0)return KEY_Pinc;
-		else if(P1_dec_Pin==0)return KEY_Pdec;
-		else if(T1_inc_Pin==0)return KEY_Tinc;
-		else if(T1_dec_Pin==0)return KEY_Tdec;
+		if(KEY_Pi==0)return KEY_Pinc;
+		else if(KEY_Pd==0)return KEY_Pdec;
+		else if(KEY_Ti==0)return KEY_Tinc;
+		else if(KEY_Td==0)return KEY_Tdec;
 	}
-	else if(P1_inc_Pin==0&&P1_dec_Pin==0&&T1_inc_Pin==0&&T1_dec_Pin==0)key_up=1; 
+	else if(KEY_Pi==0&&KEY_Pd==0&&KEY_Ti==0&&KEY_Td==0)key_up=1; 
 	return 0; //无按键按下
 }

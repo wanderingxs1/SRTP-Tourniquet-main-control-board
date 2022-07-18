@@ -17,27 +17,36 @@
 
 #define TM1640MEDO_DISPLAY_OFF  0x80   //宏定义 亮度 关
 
-
+void delay_ms(u16 time){    
+ 
+   u16 i=0;  
+ 
+   while(time--){
+ 
+      i=12000;  //自己定义
+      while(i--) ;    
+   }
+}
 
 //通信时序 启始（基础GPIO操作）（低层）
 void TM1640_start()
 { 
 	HAL_GPIO_WritePin(TM1640_GPIOPORT,GPIO_PIN_4,GPIO_PIN_SET ); //接口输出高电平1	
 	HAL_GPIO_WritePin(TM1640_GPIOPORT,GPIO_PIN_3,GPIO_PIN_SET ); //接口输出高电平1	
-	HAL_Delay(DEL);
+	delay_ms(DEL);
 	HAL_GPIO_WritePin(TM1640_GPIOPORT,GPIO_PIN_4,GPIO_PIN_RESET ); //接口输出0	
-	HAL_Delay(DEL);
+	delay_ms(DEL);
 	HAL_GPIO_WritePin(TM1640_GPIOPORT,GPIO_PIN_3,GPIO_PIN_RESET ); //接口输出0	
-	HAL_Delay(DEL);
+	delay_ms(DEL);
 }
 
 void TM1640_stop()
 {
 	HAL_GPIO_WritePin(TM1640_GPIOPORT,GPIO_PIN_4,GPIO_PIN_RESET );
 	HAL_GPIO_WritePin(TM1640_GPIOPORT,GPIO_PIN_3,GPIO_PIN_SET );
-	HAL_Delay(DEL);
+	delay_ms(DEL);
 	HAL_GPIO_WritePin(TM1640_GPIOPORT,GPIO_PIN_4,GPIO_PIN_SET ); 
-	HAL_Delay(DEL);
+	delay_ms(DEL);
 }
 
 void TM1640_writeInt(u8 data)
@@ -50,20 +59,20 @@ void TM1640_writeInt(u8 data)
 	for(i=0;i<8;i++)
 	{
 		HAL_GPIO_WritePin(TM1640_GPIOPORT,GPIO_PIN_3,GPIO_PIN_RESET );//接口输出0	
-		HAL_Delay(DEL);
+		delay_ms(DEL);
 
 		if(temp&0x01)
 		{
 			HAL_GPIO_WritePin(TM1640_GPIOPORT,GPIO_PIN_4,GPIO_PIN_SET );  //接口输出高电平1	
-			HAL_Delay(DEL);
+			delay_ms(DEL);
 		}
 		else
 		{
 			HAL_GPIO_WritePin(TM1640_GPIOPORT,GPIO_PIN_4,GPIO_PIN_RESET ); //接口输出0	
-			HAL_Delay(DEL);
+			delay_ms(DEL);
 		}
 		HAL_GPIO_WritePin(TM1640_GPIOPORT,GPIO_PIN_3,GPIO_PIN_SET ); //接口输出高电平1	
-		HAL_Delay(DEL);
+		delay_ms(DEL);
 		temp=temp>>1;
    }
 	HAL_GPIO_WritePin(TM1640_GPIOPORT,GPIO_PIN_4,GPIO_PIN_RESET ); //接口输出0	
@@ -96,8 +105,8 @@ void TM1640_Init()
 
 void TM1640_display(u8 address,u8 data)
 {
-	const u8 buff[21]={0x3f,0x06,0x5b,0x4f,0x66,0x6d,0x7d,0x07,0x7f,0x6f,0xbf,0x86,0xdb,0xcf,0xe6,0xed,0xfd,0x87,0xff,0xef,0x00};//数字0~9及0~9加点显示段码表
-    //---------------   0    1    2    3    4    5    6    7    8    9    0.   1.   2.   3.   4.   5.   6.   7.   8.   9.   无   
+	const u8 buff[21]={0xEB,0x88,0xB3,0xB9,0xD8,0x7A,0x7B,0xA8,0xFB,0xFA,0x00};//数字0~9及0~9加点显示段码表
+    //---------------   0    1    2    3    4    5    6    7    8    9	无   
    TM1640_start();
    TM1640_writeInt(0xC0+address);	         //传显示数据对应的地址
    TM1640_writeInt(buff[data]);				 //传1BYTE显示数据
@@ -110,12 +119,13 @@ void TM1640_lightLCD(u8 address,u8 workStatue)
 	TM1640_writeInt (0xC0+address);
 	switch(workStatue){
 		case 0:
-			TM1640_writeInt(0x08);break;
+			TM1640_writeInt(0x80);break;
 		case 1:
-			TM1640_writeInt (0x04);break;
+			TM1640_writeInt (0x40);break;
 		case 2:
-			TM1640_writeInt(0x02);break;
+			TM1640_writeInt(0x20);break;
 		default:
+			TM1640_writeInt(0x00);break;
 			break;
 	}
 	TM1640_stop();

@@ -1,6 +1,7 @@
 --cpu Cortex-M0
 "srtp_tourniquet\startup_stm32f030x8.o"
 "srtp_tourniquet\key.o"
+"srtp_tourniquet\display.o"
 "srtp_tourniquet\main.o"
 "srtp_tourniquet\gpio.o"
 "srtp_tourniquet\adc.o"
@@ -8,7 +9,6 @@
 "srtp_tourniquet\usart.o"
 "srtp_tourniquet\stm32f0xx_it.o"
 "srtp_tourniquet\stm32f0xx_hal_msp.o"
-"srtp_tourniquet\display.o"
 "srtp_tourniquet\stm32f0xx_hal_adc.o"
 "srtp_tourniquet\stm32f0xx_hal_adc_ex.o"
 "srtp_tourniquet\stm32f0xx_hal_rcc.o"

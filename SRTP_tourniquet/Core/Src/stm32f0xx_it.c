@@ -171,7 +171,13 @@ void TIM6_IRQHandler(void)
   /* USER CODE END TIM6_IRQn 0 */
   HAL_TIM_IRQHandler(&htim6);
   /* USER CODE BEGIN TIM6_IRQn 1 */
-
+	if(curTime >0)
+		curTime --;
+	if(curTime == 0)
+	{
+		workStatue = 2;
+		buzzerWork = 1;
+	}
   /* USER CODE END TIM6_IRQn 1 */
 }
 
@@ -185,12 +191,7 @@ void USART1_IRQHandler(void)
   /* USER CODE END USART1_IRQn 0 */
   HAL_UART_IRQHandler(&huart1);
   /* USER CODE BEGIN USART1_IRQn 1 */
-	curTime --;
-	if(curTime == 0)
-	{
-		workStatue = 2;
-		buzzerWork = 1;
-	}
+
   /* USER CODE END USART1_IRQn 1 */
 }
 

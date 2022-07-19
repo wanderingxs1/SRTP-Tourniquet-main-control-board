@@ -112,7 +112,7 @@ int main(void)
   while (1)
   {
     //读取当前压力
-		curPres = (u8)Get_Press();
+//		curPres = (u8)Get_Press();
 		
 		//扫描按键
 		key = KEY_Scan(0);
@@ -124,8 +124,10 @@ int main(void)
 				{ case KEY_Tdec: //T1-,设定时间-1min
 					HAL_TIM_Base_Stop_IT(&htim6);//关闭定时器中断	
 						__HAL_TIM_CLEAR_FLAG(&htim6,TIM_FLAG_UPDATE);//清除标志位
+					if(setTime>0){
 						setTime--;
 						curTime = setTime ;
+					}
 						HAL_TIM_Base_Start_IT(&htim6);//打开定时器中断
 						break;
 					case KEY_Tinc: //T1+,设定时间+1min
@@ -135,7 +137,7 @@ int main(void)
 						HAL_TIM_Base_Start_IT(&htim6);//打开定时器中断break;
 					 break;
 					case KEY_Pdec: //P1-
-						setPres--;break;
+						if(setPres>0)setPres--;break;
 					case KEY_Pinc: //P1+
 						setPres ++;break;
 				}
@@ -143,7 +145,7 @@ int main(void)
 		else delay_ms(10);
 //操纵蜂鸣器工作
 		if(buzzerWork)
-			HAL_GPIO_WritePin (GPIOB,GPIO_PIN_7,GPIO_PIN_SET);
+			HAL_GPIO_WritePin (GPIOB,GPIO_PIN_4,GPIO_PIN_SET);
 //显示当前工作状态指示灯
 		TM1640_lightLCD(0x0D,workStatue);
 		

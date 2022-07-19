@@ -57,18 +57,50 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
-#define DISPSCLK_Pin GPIO_PIN_3
+#define SENSOR_Pin GPIO_PIN_1
+#define SENSOR_GPIO_Port GPIOA
+#define VALVE1_Pin GPIO_PIN_0
+#define VALVE1_GPIO_Port GPIOB
+#define VALVE2_Pin GPIO_PIN_1
+#define VALVE2_GPIO_Port GPIOB
+#define INFLATE2_Pin GPIO_PIN_10
+#define INFLATE2_GPIO_Port GPIOB
+#define DEFLATE2_Pin GPIO_PIN_11
+#define DEFLATE2_GPIO_Port GPIOB
+#define VALVE3_Pin GPIO_PIN_12
+#define VALVE3_GPIO_Port GPIOB
+#define VALVE4_Pin GPIO_PIN_13
+#define VALVE4_GPIO_Port GPIOB
+#define PUMPON_Pin GPIO_PIN_14
+#define PUMPON_GPIO_Port GPIOB
+#define INFLATE1_Pin GPIO_PIN_15
+#define INFLATE1_GPIO_Port GPIOB
+#define DEFLATE1_Pin GPIO_PIN_8
+#define DEFLATE1_GPIO_Port GPIOA
+#define DISPSCLK_Pin GPIO_PIN_11
 #define DISPSCLK_GPIO_Port GPIOA
-#define DISPDIN_Pin GPIO_PIN_4
+#define DISPDIN_Pin GPIO_PIN_12
 #define DISPDIN_GPIO_Port GPIOA
-#define P1_inc_Pin GPIO_PIN_15
-#define P1_inc_GPIO_Port GPIOA
-#define P1_dec_Pin GPIO_PIN_3
-#define P1_dec_GPIO_Port GPIOB
-#define T1_inc_Pin GPIO_PIN_4
-#define T1_inc_GPIO_Port GPIOB
-#define T1_dec_Pin GPIO_PIN_5
-#define T1_dec_GPIO_Port GPIOB
+#define P1_DEC_Pin GPIO_PIN_6
+#define P1_DEC_GPIO_Port GPIOF
+#define T1_INC_Pin GPIO_PIN_7
+#define T1_INC_GPIO_Port GPIOF
+#define PMODE_Pin GPIO_PIN_15
+#define PMODE_GPIO_Port GPIOA
+#define P1_DECB3_Pin GPIO_PIN_3
+#define P1_DECB3_GPIO_Port GPIOB
+#define Buzzer_Pin GPIO_PIN_4
+#define Buzzer_GPIO_Port GPIOB
+#define P1_INC_Pin GPIO_PIN_5
+#define P1_INC_GPIO_Port GPIOB
+#define T2_DEC_Pin GPIO_PIN_6
+#define T2_DEC_GPIO_Port GPIOB
+#define P2_INC_Pin GPIO_PIN_7
+#define P2_INC_GPIO_Port GPIOB
+#define P2_DEC_Pin GPIO_PIN_8
+#define P2_DEC_GPIO_Port GPIOB
+#define T2_INC_Pin GPIO_PIN_9
+#define T2_INC_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */

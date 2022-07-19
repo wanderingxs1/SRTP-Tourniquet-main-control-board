@@ -7,6 +7,8 @@
 
 #define TM1640_GPIOPORT	GPIOA	//定义IO接口
 #define TM1640_LEDPORT	0xC8	//定义IO接口
+#define DISPDIN GPIO_PIN_12
+#define DISPSCLK GPIO_PIN_11
 
 typedef uint8_t u8;
 typedef uint16_t u16;
@@ -24,6 +26,8 @@ void TM1640_stop(void);
 
 //毫秒级延时
 void delay_ms(u16 time);
+//微秒级延时
+void delay_us(u16 time);
 
 		 				    
 #endif

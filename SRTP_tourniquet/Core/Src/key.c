@@ -13,11 +13,12 @@
 
 uint8_t KEY_Scan(uint8_t mode)
 {
-	static uint8_t key_up=1; //按键按松开标志
+	static uint8_t key_up; //按键按松开标志
+	key_up=1;
 	if(mode)key_up=1; //模式选择
 	if(key_up&&(KEY_Pi==0||KEY_Pd==0||KEY_Ti==0||KEY_Td==0))
 	{
-		delay_ms(10); //消抖
+		delay_ms(100); //消抖
 		key_up=0;				
 		if(KEY_Pi==0)return KEY_Pinc;
 		else if(KEY_Pd==0)return KEY_Pdec;

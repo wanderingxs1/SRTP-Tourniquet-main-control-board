@@ -50,16 +50,16 @@ void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, VALVE1_Pin|VALVE2_Pin|VALVE3_Pin|VALVE4_Pin
+  HAL_GPIO_WritePin(GPIOB, VALVE1ON_Pin|VALVE2ON_Pin|VALVE3ON_Pin|VALVE4ON_Pin
                           |PUMPON_Pin|Buzzer_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOA, DISPSCLK_Pin|DISPDIN_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : PBPin PBPin PBPin PBPin
-                           PBPin PBPin */
-  GPIO_InitStruct.Pin = VALVE1_Pin|VALVE2_Pin|VALVE3_Pin|VALVE4_Pin
-                          |PUMPON_Pin|Buzzer_Pin;
+                           PBPin */
+  GPIO_InitStruct.Pin = VALVE1ON_Pin|VALVE2ON_Pin|VALVE3ON_Pin|VALVE4ON_Pin
+                          |PUMPON_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -93,6 +93,13 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_PULLUP;
   HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : PtPin */
+  GPIO_InitStruct.Pin = Buzzer_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(Buzzer_GPIO_Port, &GPIO_InitStruct);
 
 }
 

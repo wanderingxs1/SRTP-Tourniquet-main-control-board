@@ -488,6 +488,16 @@
               <FileType>1</FileType>
               <FilePath>../Core/Src/stm32f0xx_hal_msp.c</FilePath>
             </File>
+            <File>
+              <FileName>autoControl.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\autoControl.c</FilePath>
+            </File>
+            <File>
+              <FileName>autoControl.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\autoControl.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

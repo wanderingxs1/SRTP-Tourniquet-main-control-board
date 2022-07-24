@@ -59,18 +59,18 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define SENSOR_Pin GPIO_PIN_1
 #define SENSOR_GPIO_Port GPIOA
-#define VALVE1_Pin GPIO_PIN_0
-#define VALVE1_GPIO_Port GPIOB
-#define VALVE2_Pin GPIO_PIN_1
-#define VALVE2_GPIO_Port GPIOB
+#define VALVE1ON_Pin GPIO_PIN_0
+#define VALVE1ON_GPIO_Port GPIOB
+#define VALVE2ON_Pin GPIO_PIN_1
+#define VALVE2ON_GPIO_Port GPIOB
 #define INFLATE2_Pin GPIO_PIN_10
 #define INFLATE2_GPIO_Port GPIOB
 #define DEFLATE2_Pin GPIO_PIN_11
 #define DEFLATE2_GPIO_Port GPIOB
-#define VALVE3_Pin GPIO_PIN_12
-#define VALVE3_GPIO_Port GPIOB
-#define VALVE4_Pin GPIO_PIN_13
-#define VALVE4_GPIO_Port GPIOB
+#define VALVE3ON_Pin GPIO_PIN_12
+#define VALVE3ON_GPIO_Port GPIOB
+#define VALVE4ON_Pin GPIO_PIN_13
+#define VALVE4ON_GPIO_Port GPIOB
 #define PUMPON_Pin GPIO_PIN_14
 #define PUMPON_GPIO_Port GPIOB
 #define INFLATE1_Pin GPIO_PIN_15
@@ -102,7 +102,8 @@ void Error_Handler(void);
 #define T2_INC_Pin GPIO_PIN_9
 #define T2_INC_GPIO_Port GPIOB
 /* USER CODE BEGIN Private defines */
-
+#define GAP 10 //充气放气压力差值
+#define FLAW 3 //误差限
 /* USER CODE END Private defines */
 
 #ifdef __cplusplus

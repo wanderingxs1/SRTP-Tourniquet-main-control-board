@@ -1,6 +1,6 @@
 #include "display.h"
 
-#define DEL  14   //宏定义 通信速率
+#define DEL  1   //宏定义 通信速率
 
 //地址模式的设置
 //#define TM1640MEDO_ADD  0x40   //宏定义	自动加一模式

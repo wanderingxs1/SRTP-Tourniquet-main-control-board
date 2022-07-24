@@ -105,14 +105,16 @@ int main(void)
   MX_TIM6_Init();
   /* USER CODE BEGIN 2 */
 	TM1640_Init();
-  /* USER CODE END 2 */
+	u8 isChangePress=0;
+	HAL_GPIO_WritePin (GPIOB,GPIO_PIN_14,GPIO_PIN_SET);
+
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
     //读取当前压力
-//		curPres = (u8)Get_Press();
+	curPres = (u8)Get_Press();
 		
 		//扫描按键
 		key = KEY_Scan(0);
@@ -140,12 +142,81 @@ int main(void)
 						if(setPres>0)setPres--;break;
 					case KEY_Pinc: //P1+
 						setPres ++;break;
+					case KEY_Pmode:
+						if(isChangePress ==0)
+						curPres=(u8)curPres*7.5;
+						else
+							curPres=(u8)curPres/7.5;
+					isChangePress =!isChangePress ;
+					break;
+						
+					//手动充气放气，优先级高于自动充气放气
+					case KEY_Inflate:{
+					//关闭自动控制中断(待求）
+					HAL_GPIO_WritePin (GPIOB,GPIO_PIN_14,GPIO_PIN_SET);
+					static u8 presGoal;
+					static u8 firstSet=1;
+					if(firstSet && isChangePress){
+						presGoal=(u8)(curPres/7.5+GAP);
+						firstSet = !firstSet ;
+					}
+					else if(firstSet && !isChangePress ){
+						presGoal=curPres+GAP;
+						firstSet = !firstSet ;
+					}
+					if(isChangePress ){
+						if(((u8)curPres /7.5)<presGoal+FLAW &&((u8)curPres /7.5)>presGoal-FLAW){
+							HAL_GPIO_WritePin (GPIOB,GPIO_PIN_14,GPIO_PIN_RESET);
+							presGoal = 0;
+							firstSet  = 1;
+						}
+					}
+					else{
+						if(curPres<presGoal+FLAW && curPres /7.5>presGoal-FLAW){
+							HAL_GPIO_WritePin (GPIOB,GPIO_PIN_14,GPIO_PIN_RESET);
+							presGoal = 0;
+							firstSet  = 1;
+					}
 				}
 				}
+				break;
+				case KEY_Deflate:{
+					//关闭自动控制中断(待求）
+					HAL_GPIO_WritePin (GPIOB,GPIO_PIN_0,GPIO_PIN_SET);
+					static u8 presGoal;
+					static u8 firstSet=1;
+					if(firstSet && isChangePress){
+						presGoal=(u8)(curPres/7.5-GAP);
+						firstSet = !firstSet ;
+					}
+					else if(firstSet && !isChangePress ){
+						presGoal=curPres-GAP;
+						firstSet = !firstSet ;
+					}
+					if(isChangePress ){
+						if(((u8)curPres /7.5)<presGoal+FLAW &&((u8)curPres /7.5)>presGoal-FLAW){
+							HAL_GPIO_WritePin (GPIOB,GPIO_PIN_14,GPIO_PIN_RESET);
+							presGoal = 0;
+							firstSet  = 1;
+						}
+					}
+					else{
+						if(curPres<presGoal+FLAW && curPres /7.5>presGoal-FLAW){
+							HAL_GPIO_WritePin (GPIOB,GPIO_PIN_14,GPIO_PIN_RESET);
+							presGoal = 0;
+							firstSet  = 1;
+					}
+				}
+				}
+				break;
+				}
+			}
 		else delay_ms(10);
 //操纵蜂鸣器工作
-		if(buzzerWork)
+		if(buzzerWork ){
 			HAL_GPIO_WritePin (GPIOB,GPIO_PIN_4,GPIO_PIN_SET);
+			delay_ms(10);
+		}
 //显示当前工作状态指示灯
 		TM1640_lightLCD(0x0D,workStatue);
 		

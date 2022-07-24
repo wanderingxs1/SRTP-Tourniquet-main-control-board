@@ -45,8 +45,16 @@ typedef uint32_t u32;
 /* USER CODE BEGIN PV */
 extern u8 setTime ;//设定时间
 extern u8 curTime ;//当前时间
+extern u8 curPres ;//当前压力,0-100kpa
+extern u8 setPres ;//设定压力
 extern u8 workStatue ;//工作状态，未定时为0，开始定时正常工作为1，溢出为2
 extern u8 buzzerWork ;//蜂鸣器工作状态，0为不工作，1为工作
+
+uint8_t message[200] = {0}; //接收字符串缓冲区
+uint8_t offset; //接收字符串缓冲区的下标及大小
+uint8_t mesg; //用于中断时，接收单个字符
+uint8_t RX_Flag; //发生中断的标志
+int count=0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -191,7 +199,33 @@ void USART1_IRQHandler(void)
   /* USER CODE END USART1_IRQn 0 */
   HAL_UART_IRQHandler(&huart1);
   /* USER CODE BEGIN USART1_IRQn 1 */
+message[offset++] = mesg; 
+	if(mesg==0x0A){
+		//帧头为a，接收设定时间
+		if(message[0]=='a'){
+			uint8_t* str=message;
+			str=message+sizeof(uint8_t);
+			message[offset-1]='\0';
+			setTime = atoi(str);
+			curTime = setTime;
+			//重启定时器
+			HAL_TIM_Base_Stop_IT(&htim6);//关闭定时器中断	
+			__HAL_TIM_CLEAR_FLAG(&htim6,TIM_FLAG_UPDATE);//清除标志位
+			HAL_TIM_Base_Start_IT(&htim6);//打开定时器中断
+		}
+		else if(message[0]=='b'){
+			uint8_t* str=message;
+			str=message+sizeof(uint8_t);
+			message[offset-1]='\0';
+			setPres = atoi(str);		
+		}
 
+		offset=0;
+	}
+	RX_Flag = 1;
+
+	//实现多次数据返回
+	HAL_UART_Receive_IT(&huart1, (uint8_t *)&mesg, 1);
   /* USER CODE END USART1_IRQn 1 */
 }
 
